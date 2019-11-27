@@ -1,55 +1,31 @@
-import java.util.ArrayList;
 import java.util.Random;
 public class CallName{
 	public static void main(String[] args){
-	ArrayList<Student> student = new ArrayList<Student>();
-	add(student);
-	printStudent(student);
-	randomStudent(student);
-	}	
-	/*创建一个方法 把所有的学生数据（姓名，年龄）
-	保存到student集合里
-	*/
-	public static void add(ArrayList<Student> student){
-		Student st1 = new Student();
-		Student st2 = new Student();
-		Student st3 = new Student();
-	    Student st4 = new Student();
-		Student st5 = new Student();
-		st1.name = "张三";
-		st1.age = 3;
-		
-		st2.name = "李四";
-		st5.age = 543;
-		
-		st3.name = "王五";
-		st3.age = 35;
-		
-		st4.name = "赵六";
-		st4.age = 345;
-		
-		st5.name = "孙二十六";
-		st5.age = 56;
-		
-		student.add(st1);
-		student.add(st2);
-		student.add(st3);
-		student.add(st4);
-		student.add(st5);
-    }
-	/*创建一个方法 遍历集合并打印*/
-	public static void printStudent(ArrayList<Student> student){
-     for(int i = 0; i < student.size();i++){
-		Student st = student.get(i);
-		System.out.println(st.name  +"   "+  st.age);
-	 }
+		String[] names = new String[8];
+		addNames(names);
+		printName(names);
+		//System.out.println(names[randomName(names)]);
 	}
-	
-	/*创建一个方法 随机打印一个学生信息*/
-	public static void randomStudent(ArrayList<Student> student){
+	public static void addNames(String[] names){
+		names[0] = "张三";
+		names[1] = "李四";
+		names[2] = "王五";
+		names[3] = "李蕾";
+		names[4] = "韩梅梅";
+		names[5] = "小名";
+		names[6] = "老王";
+		names[7] = "小华";
+	}
+	public static void printName(String[] names){
+		for(String x : names){
+			System.out.println(x);
+			
+		}
+		
+	}
+	public static int randomName(String[] names){
 		Random ran = new Random();
-		int index = ran.nextInt(student.size());
-		Student st = student.get(index);
-	    System.out.println(st.name + " "+st.age);
+		
+		return ran.nextInt(names.length);
 	}
 }
