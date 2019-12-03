@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+	
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.custom.i18n.resources"  value="message"/>
+	<package name="default" namespace="/" extends="struts-default">
+  		<!-- 自定权限拦截器 -->
+	     <interceptors>
+	     	<interceptor name="checkPrivilegeInterceptor" class="com.zfang.Interceptor.CheckPrivilegeInterceptor"></interceptor>
+	     	<interceptor-stack name="selfStack">
+	     		<interceptor-ref name="defaultStack"></interceptor-ref>
+	     		<interceptor-ref name="checkPrivilegeInterceptor"></interceptor-ref>
+	     	</interceptor-stack>  	
+	     </interceptors> 
+	    <!-- 配置全局拦截器为 -->
+        <default-interceptor-ref name="selfStack"></default-interceptor-ref>
+	    <!--默认action的使用：当用户要访问的action有误的时候自动跳转到该页面-->
+        <default-action-ref name="index" />
+	    <global-results>
+    		<result name="loginUI">/jsp/user/loginUI.jsp</result>    		
+ 			<result name="noPrivilege">/jsp/user/noPrivilege.jsp</result>
+    	</global-results>
+        <!-- 首页数据初始化 -->
+        <action name="index" class="com.zfang.controller.IndexAction">
+        	<result>/jsp/index/index.jsp</result>
+        </action>
+        <!-- 测试权限 -->
+        <action name="IndexTest" class="com.zfang.controller.IndexAction">
+        	<result>/jsp/index/index.jsp</result>
+        </action>
+        <action name="user_*" class="com.zfang.controller.UserAction" method="{1}">
+        	<result name="loginUI">/jsp/user/loginUI.jsp</result>
+        	<result name="registUI">/jsp/user/registUI.jsp</result>
+        	<result name="toIndex">/WEB-INF/jsp/admin/index.jsp</result>
+        	<result  name="MyLibrary">/WEB-INF/jsp/user/mylibrary.jsp</result>
+        	<result  name="input">/jsp/user/registUI.jsp</result>
+        </action>
+        <!-- 普通用戶：我的图书馆管理 -->
+    	<action name="library_*" class="com.zfang.controller.LibraryAction" method="{1}">
+    		<result  name="top">/WEB-INF/jsp/user/myLibrary/top.jsp</result>
+    		<result  name="left">/WEB-INF/jsp/user/myLibrary/left.jsp</result>
+    		<result  name="right">/WEB-INF/jsp/user/myLibrary/right.jsp</result>
+    		<result  name="bottom">/WEB-INF/jsp/user/myLibrary/bottom.jsp</result>
+    	</action>
+        <!-- 后台管理：主页管理 -->
+    	<action name="home_*" class="com.zfang.controller.HomeAction" method="{1}">
+    		<result  name="index">/WEB-INF/jsp/admin/index.jsp</result>
+    		<result  name="top">/WEB-INF/jsp/admin/top.jsp</result>
+    		<result  name="left">/WEB-INF/jsp/admin/left.jsp</result>
+    		<result  name="right">/WEB-INF/jsp/admin/right.jsp</result>
+    		<result  name="bottom">/WEB-INF/jsp/admin/bottom.jsp</result>
+    	 </action>
+    	
+     </package>
+ 
+</struts>
